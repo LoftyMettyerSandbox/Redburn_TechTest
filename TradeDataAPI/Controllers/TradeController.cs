@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Enums;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NServiceBus;
+using TradeDataFeed.Contexts;
 
 namespace TradeDataAPI.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class TradeController : ControllerBase
+    public class TradeController : Controller
     {
 
         public IEndpointInstance _endpointInstance;
@@ -21,28 +24,27 @@ namespace TradeDataAPI.Controllers
         }
 
         // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [HttpGet("{identifer}")]
+        public IActionResult Get(string identifer)
         {
-            return new string[] { "value1", "value2" };
+
+            var data = new TradeContext();
+            var record1 = data.TradeData.FirstOrDefault(t => t.Identifier == identifer);
+
+            //    var data = new List<OMSTradeData>
+            return Json(record1);
         }
 
-        //// POST api/values
-        //[HttpPost]
-        //public void PostTrades([FromBody] IEnumerable<string> value) {
-        //    var count = 1;
-        //}
 
         [HttpPost]
-        //public void PostTrades([FromBody] IList<string> value)
-        public void PostTrade([FromBody] string value)
+        public void PostTrades([FromBody] string tradeStream)
         {
 
-            var message = new TradeMessage(value);
+            var message = new TradeMessage(tradeStream);
 
             try
             {
-                List<OMSTradeData> messages = JsonConvert.DeserializeObject<List<OMSTradeData>>(value);
+                List<OMSTradeData> messages = JsonConvert.DeserializeObject<List<OMSTradeData>>(tradeStream);
                 foreach (var tradeMessage in messages)
                 {
                     var tradeResult = _endpointInstance.Publish(tradeMessage);
