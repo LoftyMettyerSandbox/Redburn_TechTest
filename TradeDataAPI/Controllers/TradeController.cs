@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Common.Enums;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NServiceBus;
 
 namespace TradeDataAPI.Controllers
@@ -12,7 +15,8 @@ namespace TradeDataAPI.Controllers
 
         public IEndpointInstance _endpointInstance;
 
-        public TradeController(IEndpointInstance endpointInstance) {
+        public TradeController(IEndpointInstance endpointInstance)
+        {
             _endpointInstance = endpointInstance;
         }
 
@@ -23,20 +27,34 @@ namespace TradeDataAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-                public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        //// POST api/values
+        //[HttpPost]
+        //public void PostTrades([FromBody] IEnumerable<string> value) {
+        //    var count = 1;
+        //}
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        //public void PostTrades([FromBody] IList<string> value)
+        public void PostTrade([FromBody] string value)
         {
-            var result = _endpointInstance.Publish(new OMSTradeData() { Identifier = value });
+
+            var message = new TradeMessage(value);
+
+            try
+            {
+                List<OMSTradeData> messages = JsonConvert.DeserializeObject<List<OMSTradeData>>(value);
+                foreach (var tradeMessage in messages)
+                {
+                    var tradeResult = _endpointInstance.Publish(tradeMessage);
+                }
+            }
+            catch
+            {
+                message.ValidityType = MessageValidityType.Failure;
+            }
+
+            var messageResult = _endpointInstance.Publish(message);
+
         }
-
-
     }
 }

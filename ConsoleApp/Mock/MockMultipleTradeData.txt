@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Identifier": "MKS",
+    "OrderType": 0,
+    "OrderSize": 123,
+    "OrderSubType": 0,
+    "Instruction": "fill",
+    "OrderTransmissionType": 1
+  },
+  {
+    "Identifier": "BP.",
+    "OrderType": 1,
+    "OrderSize": 456,
+    "OrderSubType": 2,
+    "Instruction": "DayOrder",
+    "OrderTransmissionType": 1
+  }
+]

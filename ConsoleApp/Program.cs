@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Flurl.Http;
+using TradeDataFeed.Streams;
 
 namespace ConsoleApp
 {
@@ -15,17 +16,29 @@ namespace ConsoleApp
             Console.WriteLine("Curious known bug if you're using Visual Studio 2017 - multiple startup projects don't seem to work very well the first time you run the project. If this happens, can you just try running the project again");
 
             string url = "https://localhost:44344/api/trade";
-            string details = CallRestMethod(url);
-            Console.WriteLine(details);
 
-            PostRestDataAsync(url, Guid.NewGuid().ToString());
+
+            //string details = CallRestMethod(url);
+            //Console.WriteLine(details);
+            var trade = MockTradeDataStream.GetTradeStream("MockSingleTradeData");
+
+            PostStream(url, trade);
+
+            PostStream(url, MockTradeDataStream.GetTradeStream("MockMultipleTradeData"));
+
 
             Console.ReadKey();
         }
 
-        public class Simples
-        {
-            public string Name { get; set; }
+
+        public static void PostStream(string url, Stream streamContent) {
+
+            streamContent.Position = 0;
+            using (StreamReader reader = new StreamReader(streamContent, Encoding.UTF8))
+            {
+                var content = reader.ReadToEnd();
+                PostRestDataAsync(url, content);
+            }
         }
 
 
@@ -34,65 +47,7 @@ namespace ConsoleApp
             var result = url
                 .WithHeader("Accept", "application/json")
                 .PostJsonAsync(content);
-
-            //var client = new HttpClient();
-
-
-            //var simps = new Simples() { Name = "bob" };
-
-            //var json = JsonConvert.SerializeObject(simps);
-
-            //var postData = new StringContent(json, Encoding.UTF8, "application/json");
-            ////var formContent = new FormUrlEncodedContent(new[] {
-            ////    new KeyValuePair<string, string>("", content)
-            ////});
-
-            ////  postData = "blah";
-
-            //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-
-            //client.PostAsync(url, postData)
-            //     //            client.PostAsync(url, postData)
-            //     .ContinueWith(task =>
-            //     {
-            //         var responseNew = task.Result;
-            //         //Console.WriteLine(responseNew.Content.ReadAsStringAsync().Result);
-            //         Console.WriteLine(responseNew.ReasonPhrase);
-            //     });
-
-            ////client.PostAsync(url, formContent)
-            ////     //            client.PostAsync(url, postData)
-            ////     .ContinueWith(task =>
-            ////     {
-            ////         var responseNew = task.Result;
-            ////         Console.WriteLine(responseNew.Content.ReadAsStringAsync().Result);
-            ////     });
-
-
-            ////  Console.WriteLine(resultContent);
-
-
-            ////using (var request = new HttpRequestMessage(HttpMethod.Post, url))
-            ////{
-            ////    var json = JsonConvert.SerializeObject(content);
-            ////    using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
-            ////    {
-            ////        request.Content = stringContent;
-
-
-
-
-            ////        //using (var response = await client
-            ////        //    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            ////        //    .ConfigureAwait(false))
-            ////        //{
-            ////        //    response.EnsureSuccessStatusCode();
-            ////        //}
-            ////    }
-            ////}
-
         }
-
 
 
         public static string CallRestMethod(string url)

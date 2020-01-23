@@ -19,17 +19,19 @@ namespace TradeDataFeed.Contexts
         //public TradeContext(DbContextOptions<TradeContext> options) : base(options) { }
 
         public DbSet<OMSTradeData> TradeData { get; set; }
+        public DbSet<TradeMessage> Messages { get; set; }
 
-        //public bool CommitTrades(IEnumerable<OMSTradeDataModel> trades)
-        //{
-        //    TradeData.AddRange(trades);
-        //    SaveChanges();
-        //    return true;
-        //}
 
         public bool CommitTrade(OMSTradeData trade)
         {
             TradeData.Add(trade);
+            SaveChanges();
+            return true;
+        }
+
+        public bool CommitMessage(TradeMessage message)
+        {
+            Messages.AddRange(message);
             SaveChanges();
             return true;
         }
