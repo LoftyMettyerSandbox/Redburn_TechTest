@@ -45,29 +45,5 @@ namespace TradeDataAPI
             app.UseMvc();
         }
 
-
-        //public IEndpointInstance GetNServiceBusEndpoint() {
-
-        //    var endpointConfiguration = new EndpointConfiguration("ClientUI");
-
-        //    var transport = endpointConfiguration.UseTransport<LearningTransport>();
-
-        //    var routing = transport.Routing();
-        //    routing.RouteToEndpoint(typeof(PlaceOrder), "Sales");
-
-        //    endpointConfiguration.SendFailedMessagesTo("error");
-        //    endpointConfiguration.AuditProcessedMessagesTo("audit");
-        //    endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
-
-        //    var metrics = endpointConfiguration.EnableMetrics();
-        //    metrics.SendMetricDataToServiceControl("Particular.Monitoring", TimeSpan.FromMilliseconds(500));
-
-        //    _endpointInstance = await Endpoint.Start(endpointConfiguration)
-        //        .ConfigureAwait(false);
-
-
-        //}
-
-
     }
 }
