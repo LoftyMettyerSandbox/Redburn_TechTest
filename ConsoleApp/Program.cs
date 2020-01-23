@@ -1,13 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Flurl.Http;
 
 namespace ConsoleApp
@@ -24,7 +18,7 @@ namespace ConsoleApp
             string details = CallRestMethod(url);
             Console.WriteLine(details);
 
-            PostRestDataAsync(url, "blah324235434534");
+            PostRestDataAsync(url, Guid.NewGuid().ToString());
 
             Console.ReadKey();
         }
