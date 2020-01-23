@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Flurl.Http;
 
 namespace ConsoleApp
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Simple harness of api!");
@@ -15,8 +23,83 @@ namespace ConsoleApp
             string url = "https://localhost:44344/api/trade";
             string details = CallRestMethod(url);
             Console.WriteLine(details);
+
+            PostRestDataAsync(url, "blah324235434534");
+
             Console.ReadKey();
         }
+
+        public class Simples
+        {
+            public string Name { get; set; }
+        }
+
+
+        public static void PostRestDataAsync(string url, string content)
+        {
+            var result = url
+                .WithHeader("Accept", "application/json")
+                .PostJsonAsync(content);
+
+            //var client = new HttpClient();
+
+
+            //var simps = new Simples() { Name = "bob" };
+
+            //var json = JsonConvert.SerializeObject(simps);
+
+            //var postData = new StringContent(json, Encoding.UTF8, "application/json");
+            ////var formContent = new FormUrlEncodedContent(new[] {
+            ////    new KeyValuePair<string, string>("", content)
+            ////});
+
+            ////  postData = "blah";
+
+            //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+
+            //client.PostAsync(url, postData)
+            //     //            client.PostAsync(url, postData)
+            //     .ContinueWith(task =>
+            //     {
+            //         var responseNew = task.Result;
+            //         //Console.WriteLine(responseNew.Content.ReadAsStringAsync().Result);
+            //         Console.WriteLine(responseNew.ReasonPhrase);
+            //     });
+
+            ////client.PostAsync(url, formContent)
+            ////     //            client.PostAsync(url, postData)
+            ////     .ContinueWith(task =>
+            ////     {
+            ////         var responseNew = task.Result;
+            ////         Console.WriteLine(responseNew.Content.ReadAsStringAsync().Result);
+            ////     });
+
+
+            ////  Console.WriteLine(resultContent);
+
+
+            ////using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+            ////{
+            ////    var json = JsonConvert.SerializeObject(content);
+            ////    using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
+            ////    {
+            ////        request.Content = stringContent;
+
+
+
+
+            ////        //using (var response = await client
+            ////        //    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+            ////        //    .ConfigureAwait(false))
+            ////        //{
+            ////        //    response.EnsureSuccessStatusCode();
+            ////        //}
+            ////    }
+            ////}
+
+        }
+
+
 
         public static string CallRestMethod(string url)
         {
