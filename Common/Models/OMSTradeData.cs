@@ -1,4 +1,5 @@
 ﻿using NServiceBus;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Models
 {
@@ -8,6 +9,8 @@ namespace Common.Models
 
     public class OMSTradeData : IEvent
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Identifier { get; set; }
         public int OrderType { get; set; }
         public int OrderSize { get; set; }

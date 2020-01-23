@@ -1,6 +1,7 @@
 ﻿using NServiceBus;
 using System;
 using System.Threading.Tasks;
+using TradeDataFeed.Contexts;
 
 namespace QueueProcessor
 {
@@ -11,6 +12,10 @@ namespace QueueProcessor
 
             Console.Title = "Trade Data Queue Processing";
 
+            // Configure EntityFramework
+            MigrateDB();
+
+            // Configure NServiceBus
             var endpointConfiguration = new EndpointConfiguration("TradeData");
 
             endpointConfiguration.UseTransport<LearningTransport>();
@@ -34,6 +39,15 @@ namespace QueueProcessor
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+
+        }
+
+        public static void MigrateDB()
+        {
+
+            var context = new TradeContext();
+            context.Database.EnsureCreated();       // Doesn't seem autocreated in netcore?
+
         }
 
     }

@@ -33,10 +33,8 @@ namespace TradeDataAPI.Controllers
         // POST api/values
         [HttpPost]
         public void Post([FromBody] string value)
-//        public async Task<ActionResult>PostTrade([FromBody] string value)
         {
             var result = _endpointInstance.Publish(new OMSTradeData() { Identifier = value });
-            var blah2 =  "received ";
         }
 
 

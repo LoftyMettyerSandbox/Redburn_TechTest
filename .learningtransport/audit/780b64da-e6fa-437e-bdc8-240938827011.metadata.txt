@@ -1,0 +1,22 @@
+{
+  "NServiceBus.MessageId": "7c5bcbd5-5bec-407a-a430-ab4b00e7f092",
+  "NServiceBus.MessageIntent": "Publish",
+  "NServiceBus.ConversationId": "07af4d82-65ba-4b91-9c32-ab4b00e7f092",
+  "NServiceBus.CorrelationId": "7c5bcbd5-5bec-407a-a430-ab4b00e7f092",
+  "NServiceBus.OriginatingMachine": "BRM-19258-D",
+  "NServiceBus.OriginatingEndpoint": "TradeDataAPI",
+  "$.diagnostics.originating.hostid": "edc0cb6440a900cdb579537cbdeea4c9",
+  "NServiceBus.ReplyToAddress": "TradeDataAPI",
+  "NServiceBus.ContentType": "text\/xml",
+  "NServiceBus.EnclosedMessageTypes": "Common.Models.OMSTradeData, Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "NServiceBus.Version": "7.2.0",
+  "NServiceBus.TimeSent": "2020-01-23 14:04:28:001808 Z",
+  "NServiceBus.Retries": "2",
+  "NServiceBus.Retries.Timestamp": "2020-01-23 14:04:57:400678 Z",
+  "NServiceBus.ProcessingStarted": "2020-01-23 14:08:27:305632 Z",
+  "NServiceBus.ProcessingEnded": "2020-01-23 14:08:27:305984 Z",
+  "$.diagnostics.hostid": "0fa055172b8aae42c4e76f56a6bb6bbb",
+  "$.diagnostics.hostdisplayname": "BRM-19258-D",
+  "NServiceBus.ProcessingMachine": "BRM-19258-D",
+  "NServiceBus.ProcessingEndpoint": "TradeData"
+}
