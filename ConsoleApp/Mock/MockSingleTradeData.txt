@@ -1,8 +1,10 @@
-﻿{
-"Identifier": "MKS",
-"OrderType": 0,
-"OrderSize": 123,
-"OrderSubType": 0,
-"Instruction": "fill",
-"OrderTransmissionType": 1
-}
+﻿[
+  {
+    "Identifier": "MKS",
+    "OrderType": 0,
+    "OrderSize": 123,
+    "OrderSubType": 0,
+    "Instruction": "fill",
+    "OrderTransmissionType": 1
+  }
+]

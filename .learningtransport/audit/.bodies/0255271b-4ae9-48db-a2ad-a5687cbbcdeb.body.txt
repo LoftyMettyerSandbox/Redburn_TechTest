@@ -1,1 +1,0 @@
-<?xml version="1.0"?><OMSTradeData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/Common.Models"><Identifier>0aad6309-afc1-40e3-84ff-b73d6d5741a8</Identifier><OrderType>0</OrderType><OrderSize>0</OrderSize><OrderSubType>0</OrderSubType></OMSTradeData>

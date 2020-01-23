@@ -24,6 +24,8 @@ namespace ConsoleApp
 
             PostStream(url, trade);
 
+            PostStream(url, MockTradeDataStream.GetTradeStream("MockMultipleTradeData"));
+
 
             Console.ReadKey();
         }
