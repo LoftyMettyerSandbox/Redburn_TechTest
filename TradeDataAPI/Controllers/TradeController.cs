@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NServiceBus;
 
 namespace TradeDataAPI.Controllers
@@ -34,7 +35,20 @@ namespace TradeDataAPI.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            var result = _endpointInstance.Publish(new OMSTradeData() { Identifier = value });
+
+            try {
+
+                OMSTradeData tradeMessage = JsonConvert.DeserializeObject<OMSTradeData>(value);
+                var result = _endpointInstance.Publish(tradeMessage);
+
+        }
+            catch {
+
+            // push error
+
+            }
+
+
         }
 
 

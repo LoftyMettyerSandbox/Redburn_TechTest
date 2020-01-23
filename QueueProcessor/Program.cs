@@ -44,10 +44,8 @@ namespace QueueProcessor
 
         public static void MigrateDB()
         {
-
             var context = new TradeContext();
             context.Database.EnsureCreated();       // Doesn't seem autocreated in netcore?
-
         }
 
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0"?><OMSTradeData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.net/Common.Models"><Id>0</Id><Identifier>{
+"identifier": "MKS",
+"orderType": 0,
+"orderSize": 123,
+"orderSubType": 0,
+"instruction": "fill",
+"orderTransmissionType": 1
+}</Identifier><OrderType>0</OrderType><OrderSize>0</OrderSize><OrderSubType>0</OrderSubType></OMSTradeData>
