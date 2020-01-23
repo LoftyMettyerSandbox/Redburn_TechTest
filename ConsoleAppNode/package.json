@@ -1,0 +1,16 @@
+{
+  "name": "console-app-node",
+  "version": "0.0.0",
+  "description": "ConsoleAppNode",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "http": "0.0.0",
+    "querystring": "^0.2.0",
+    "readline-sync": "^1.4.10",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  }
+}
