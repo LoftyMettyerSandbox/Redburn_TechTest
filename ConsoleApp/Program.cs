@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Net.Cache;
 using System.Text;
+using System.Timers;
 using Flurl.Http;
-using TradeDataFeed.Streams;
 
 namespace ConsoleApp
 {
@@ -12,13 +13,19 @@ namespace ConsoleApp
 
         private static string watchPath = AppDomain.CurrentDomain.BaseDirectory + "Mock\\";
         private static readonly FileSystemWatcher Watcher = new FileSystemWatcher();
+        static Timer timer = new Timer(5000);
         private static string url = "https://localhost:44344/api/trade";
 
         static void Main(string[] args)
         {
+            Console.Title = "Trade Data Client Streamer";
 
             Console.WriteLine("Simple harness of api!");
             Console.WriteLine("Curious known bug if you're using Visual Studio 2017 - multiple startup projects don't seem to work very well the first time you run the project. If this happens, can you just try running the project again");
+
+            // Cache testing of data
+            timer.Elapsed += timer_Elapsed;
+            timer.Start();
 
             // Listen for file changes
             Console.WriteLine(string.Format("Listening to path {0}", Watcher.Path));
@@ -34,27 +41,16 @@ namespace ConsoleApp
             //                     | NotifyFilters.FileName
             //                     | NotifyFilters.DirectoryName;
             Watcher.NotifyFilter = NotifyFilters.LastWrite;
-            // Only watch text files.
             Watcher.Filter = "*.txt";
 
             // Add event handlers.
             Watcher.Changed += OnFileChanged;
-        //    watcher.Created += OnChanged;
 
             // Begin watching.
             Watcher.EnableRaisingEvents = true;
 
             // Wait for the user to quit the program.
             while (Console.Read() != 'q') ;
-
-
-            //    //string details = CallRestMethod(url);
-            //    //Console.WriteLine(details);
-            //    var trade = MockTradeDataStream.GetTradeStream("MockSingleTradeData");
-
-            //PostStream(url, trade);
-
-            //PostStream(url, MockTradeDataStream.GetTradeStream("MockMultipleTradeData"));
 
         }
 
@@ -65,24 +61,27 @@ namespace ConsoleApp
             using (StreamReader reader = new StreamReader(streamContent, Encoding.UTF8))
             {
                 var content = reader.ReadToEnd();
-                PostRestDataAsync(url, content);
-            }
-        }
+                var result = url
+                    .WithHeader("Accept", "application/json")
+                    .PostJsonAsync(content);
 
-        public static void PostRestDataAsync(string url, string content)
-        {
-            var result = url
-                .WithHeader("Accept", "application/json")
-                .PostJsonAsync(content);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Posting...");
+                Console.ResetColor();
+            }
         }
 
         public static string CallRestMethod(string url)
         {
+            HttpRequestCachePolicy policy = new HttpRequestCachePolicy(HttpRequestCacheLevel.Default);
+
             HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(url);
+            //webrequest.CachePolicy = policy;
+
             webrequest.Method = "GET";
             webrequest.ContentType = "application/x-www-form-urlencoded";
             HttpWebResponse webresponse = (HttpWebResponse)webrequest.GetResponse();
-            Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
+            Encoding enc = Encoding.GetEncoding("utf-8");
             StreamReader responseStream = new StreamReader(webresponse.GetResponseStream(), enc);
             string result = string.Empty;
             result = responseStream.ReadToEnd();
@@ -130,8 +129,15 @@ namespace ConsoleApp
 
             PostStream(url, mockTrade);
 
-            //      string text = File.ReadAllText(path);
-            //    Console.WriteLine(text);
+        }
+
+        private static void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            string details = CallRestMethod(url + "/MKS");
+            
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(details);
+            Console.ResetColor();
 
         }
 

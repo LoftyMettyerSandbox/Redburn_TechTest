@@ -4,6 +4,7 @@ using System.Linq;
 using Common.Enums;
 using Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using NServiceBus;
 using TradeDataFeed.Contexts;
@@ -17,22 +18,37 @@ namespace TradeDataAPI.Controllers
     {
 
         public IEndpointInstance _endpointInstance;
+        private IMemoryCache _cache;
 
-        public TradeController(IEndpointInstance endpointInstance)
+        public TradeController(IEndpointInstance endpointInstance, IMemoryCache memoryCache)
         {
             _endpointInstance = endpointInstance;
+            _cache = memoryCache;
         }
 
         // GET api/values
-        [HttpGet("{identifer}")]
-        public IActionResult Get(string identifer)
+        [HttpGet("{identifier}")]
+        public IActionResult Get(string identifier)
         {
 
-            var data = new TradeContext();
-            var record1 = data.TradeData.FirstOrDefault(t => t.Identifier == identifer);
+            // This has implemented fairly basic caching of data for a minute.
+            // In a production environment you may want to look at sql dependency injection to flush the cache only
+            // if the underlying database values have changed.
 
-            //    var data = new List<OMSTradeData>
-            return Json(record1);
+            OMSTradeData cacheEntry = null;
+
+            if (identifier != null && !_cache.TryGetValue(identifier.ToUpper(), out cacheEntry)) {
+                var data = new TradeContext();
+                cacheEntry = data.TradeData.FirstOrDefault(t => t.Identifier == identifier);
+
+                MemoryCacheEntryOptions options = new MemoryCacheEntryOptions();
+                options.AbsoluteExpiration = DateTime.Now.AddMinutes(1);
+                options.SlidingExpiration = TimeSpan.FromMinutes(1);
+                _cache.Set(cacheEntry.Identifier, cacheEntry, options);
+            }
+
+            return Json(cacheEntry);
+
         }
 
 

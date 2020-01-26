@@ -20,7 +20,13 @@ namespace TradeDataAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.CacheProfiles.Add("Default20",
+                    new CacheProfile() { Duration = 20 });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddMemoryCache();
 
             services.RegisterServices(Configuration);
 
