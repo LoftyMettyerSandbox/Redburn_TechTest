@@ -21,8 +21,11 @@ namespace QueueProcessor.Handlers
         {
             _context.CommitMessage(message);
             
-            var displayMessage = Regex.Replace(message.Message, @"\s+", "");
+            var displayMessage = string.Format("Save message - {0}", Regex.Replace(message.Message, @"\s+", ""));
+
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(displayMessage);
+            Console.ResetColor();
 
             return Task.CompletedTask;
         }

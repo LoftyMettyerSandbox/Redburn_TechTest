@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Idetifier": "MKS",
+    "OrdrType": 0,
+    "OrdeSize": 123,
+    "OrderSubType": 0,
+    "Instruction": "fill",
+    "OrderTransmissionType": 1
+  }
+]

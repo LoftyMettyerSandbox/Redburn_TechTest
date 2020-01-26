@@ -44,10 +44,10 @@ namespace TradeDataAPI.Controllers
 
             try
             {
-                List<OMSTradeData> messages = JsonConvert.DeserializeObject<List<OMSTradeData>>(tradeStream);
-                foreach (var tradeMessage in messages)
+                List<OMSTradeData> trades = JsonConvert.DeserializeObject<List<OMSTradeData>>(tradeStream);
+                foreach (var trade in trades)
                 {
-                    var tradeResult = _endpointInstance.Publish(tradeMessage);
+                    var tradeResult = _endpointInstance.Publish(trade);
                 }
             }
             catch

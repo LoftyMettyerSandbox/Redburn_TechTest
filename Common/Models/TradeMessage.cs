@@ -18,11 +18,6 @@ namespace Common.Models
         public DateTime ReceivedDate { get; set; }
         public string Message { get; set; }
         public MessageValidityType ValidityType { get; set; }
-        //public int TradesInMessage
-        //{
-        //    get { return Trades.Count; }
-        //}
-        //public List<OMSTradeData>Trades { get; set; }
 
     }
 }
