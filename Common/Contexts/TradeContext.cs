@@ -8,13 +8,12 @@ namespace TradeDataFeed.Contexts
 
         private readonly TradeContext _context;
 
-        private const string connectionString = "Server=.;Database=Redburn_Lofty1;user id=sa;password=asr;";
+        private const string connectionString = "Server=.;Database=Redburn_Lofty;trusted_connection=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(connectionString);
         }
-
 
         //public TradeContext(DbContextOptions<TradeContext> options) : base(options) { }
 

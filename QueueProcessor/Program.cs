@@ -1,4 +1,6 @@
-﻿using NServiceBus;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 using System;
 using System.Threading.Tasks;
 using TradeDataFeed.Contexts;
@@ -29,7 +31,7 @@ namespace QueueProcessor
             endpointConfiguration.SendFailedMessagesTo("error");
             endpointConfiguration.AuditProcessedMessagesTo("audit");
 
-// These extra error and metric functions don't seem to work in netcore anymore!?
+            // These extra error and metric functions don't seem to work in netcore anymore!?
             //            endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
             //          var metrics = endpointConfiguration.EnableMetrics();
             //        metrics.SendMetricDataToServiceControl("Particular.Monitoring", TimeSpan.FromMilliseconds(500));

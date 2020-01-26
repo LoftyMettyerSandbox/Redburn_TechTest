@@ -19,18 +19,15 @@ public static class ServiceCollectionExtensions
         endpointConfiguration.SendFailedMessagesTo("error");
         endpointConfiguration.AuditProcessedMessagesTo("audit");
                     
-      //  endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+        //  endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+        //  var metrics = endpointConfiguration.EnableMetrics();
+        //  metrics.SendMetricDataToServiceControl("Particular.Monitoring", TimeSpan.FromMilliseconds(500));
 
-        //                        var metrics = endpointConfiguration.EnableMetrics();
-        //          metrics.SendMetricDataToServiceControl("Particular.Monitoring", TimeSpan.FromMilliseconds(500));
-
-        var blah = Endpoint.Start(endpointConfiguration)
-            .ConfigureAwait(false);
-        var blah2 = blah.GetAwaiter();
-        var blah3 = blah2.GetResult();
-
-        services.AddSingleton(blah3);
-
+        var endpoint = Endpoint.Start(endpointConfiguration)
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
+        services.AddSingleton(endpoint);
 
         return services;
     }

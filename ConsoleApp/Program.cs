@@ -21,7 +21,7 @@ namespace ConsoleApp
             Console.Title = "Trade Data Client Streamer";
 
             Console.WriteLine("Simple harness of api!");
-            Console.WriteLine("Curious known bug if you're using Visual Studio 2017 - multiple startup projects don't seem to work very well the first time you run the project. If this happens, can you just try running the project again");
+            Console.WriteLine("Curious known bug sometime if you're using Visual Studio 2017 - multiple startup projects don't seem to work very well the first time you run the project. If this happens, can you just try running the project again");
 
             // Cache testing of data
             timer.Elapsed += timer_Elapsed;
