@@ -1,6 +1,7 @@
 ﻿using Common.Models;
 using NServiceBus;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TradeDataFeed.Contexts;
 
@@ -19,8 +20,12 @@ namespace QueueProcessor.Handlers
         public Task Handle(TradeMessage message, IMessageHandlerContext context)
         {
             _context.CommitMessage(message);
+            
+            var displayMessage = string.Format("Save message - {0}", Regex.Replace(message.Message, @"\s+", ""));
 
-            Console.WriteLine(message.Message);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(displayMessage);
+            Console.ResetColor();
 
             return Task.CompletedTask;
         }

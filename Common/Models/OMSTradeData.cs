@@ -17,5 +17,9 @@ namespace Common.Models
         public int OrderSubType { get; set; }
         public string Instruction { get; set; }
         public string OrderTransmissionType { get; set; }
+
+        // Validity logic (Only simple implemented)
+        public bool IsValid => Identifier != null;
+
     }
 }

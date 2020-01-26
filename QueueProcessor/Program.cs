@@ -7,8 +7,14 @@ namespace QueueProcessor
 {
     class Program
     {
+        // Some of the messaging functions are a bit betwixt and between.
+        // Namely when sending the messages from the API controller to the queue processor you’d possibly want to simplify
+        // to just send the whole steam and have the logic of validity checking in one place. But if you plan on having more
+        // endpoints and logic in the controller then it makes sense to split the messages out to be a whole message
+        // and a specific trade message.
 
-        static void Main(string[] args) { 
+        static void Main(string[] args)
+        {
 
             Console.Title = "Trade Data Queue Processing";
 
@@ -22,8 +28,9 @@ namespace QueueProcessor
 
             endpointConfiguration.SendFailedMessagesTo("error");
             endpointConfiguration.AuditProcessedMessagesTo("audit");
-            //            endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
 
+// These extra error and metric functions don't seem to work in netcore anymore!?
+            //            endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
             //          var metrics = endpointConfiguration.EnableMetrics();
             //        metrics.SendMetricDataToServiceControl("Particular.Monitoring", TimeSpan.FromMilliseconds(500));
 
