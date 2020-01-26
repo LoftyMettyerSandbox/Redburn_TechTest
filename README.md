@@ -1,7 +1,6 @@
-#Redburn Technical Test
+# Redburn Technical Test
 
-
-##Developer Notes
+## Developer Notes
 This has been developed and tested using Visual Studio 2017. There are 4 projects in this solution which can be loaded using RunPathTechnicalTest.sln. Running the solution will load up all the required projects and you should see messages appear in the console showing some flow of messages. There is one posted invalid message which will flash up in red on the console - this is by design.
 
 Firstly there's a common class library. While not really necessary in a project of this size I feel its a good habit to try and split out common components.
@@ -12,13 +11,11 @@ There's then the queue processing project. This listens on the NServiceBus for t
 
 Lastly there's the client app. This reads json data from any .txt file in the \mock folder and posts it to the api. It also issues a get and presents the return result. This is a console app and it just used as the test harness. I orignally dabbled with creating an xUnit test library instead of this, but felt it was better for the purposes of this demo to have something with a bit more UI.
 
-##General Notes
+## General Notes
 You may notice there's a 5th project. This isn't used but I've left it as its an embyonic (and buggy) Nodejs project to mimic the console app. I wasn't sure how much time to spend on this or if I should have written the whole application in this.
 Caching has been implemented in the middle to backend layers. Its possible to configure caching at the api request layer so that data is returned depending on the parameter values passed in. However from experience this is inconsistent depending on calling method, e.g. when running in Visual Studio its ignored the caching, while PostMan does not. I suspect this is just my environment being setup badly (and Google agrees). By taking more programatic control I know it will cache the way I want it to. I've arbitraily set it as a minute, but in production you'd probably want to be cleverer and may choose to look at sqldepends or such like to automatically dump the cache when the underlying data changes.
 
-
-##Test Scenario
-
+## Test Scenario
 The purpose of this test is to assess the candidate’s abilities in areas we consider key to the type of projects we undertake.
 
 Scenario
@@ -32,6 +29,3 @@ Features
 4)	The data should be cached for a limited period when called from the API
 Tech Stack
 We would like you to use .net core, Sql Server and optionally Node.js for this project. You may include other technologies.
-
-
-
