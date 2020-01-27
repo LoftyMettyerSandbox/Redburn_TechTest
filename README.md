@@ -1,7 +1,7 @@
 # Redburn Technical Test
 
 ## Developer Notes
-This has been developed and tested using Visual Studio 2017. There are 4 projects in this solution which can be loaded using RunPathTechnicalTest.sln. Running the solution will load up all the required projects and you should see messages appear in the console showing some flow of messages. There is one posted invalid message which will flash up in red on the console - this is by design.
+This has been developed and tested using Visual Studio 2017. There are 4 projects in this solution which can be loaded using RunPathTechnicalTest.sln. Running the solution should load up all the required projects however Visual Studio does not seem to want to persist the startup configuration in the .sln file - instead it seems to want to store this as a user config and hence is ignored by git. To reinstate on the solution explorer you can configure multiple startup - ensure that the queue, api and console are selected. You can then run should then see messages appear in the console showing some flow of messages. I've deliberately put one posted message which is invalid and will flash up in red on the console.
 
 Firstly there's a common class library. While not really necessary in a project of this size I feel its a good habit to try and split out common components.
 
